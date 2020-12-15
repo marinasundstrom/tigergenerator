@@ -108,6 +108,12 @@ namespace Tigergenerator.Pages
             await JSInterop.ScrollToBottomAsync();
         }
 
+        private async Task Share()
+        {
+            var dataUrl = await _canvasReference.ToDataUrlAsync();
+            Console.WriteLine(dataUrl);
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             this._context = await this._canvasReference.GetContextAsync();

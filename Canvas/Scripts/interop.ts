@@ -9,3 +9,7 @@ export function setProp(obj, name, value) {
 export function getProp(obj, name) {
     return obj[name];
 }
+
+export function toDataURL(canvas, type) {
+    return canvas.toDataURL(type);
+}

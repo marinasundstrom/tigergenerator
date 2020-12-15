@@ -40,6 +40,12 @@ namespace Canvas
             await module.InvokeVoidAsync("setProp", canvas, name, value);
         }
 
+        public async ValueTask<string> ToDataUrlAsync(ElementReference canvas, string type)
+        {
+            var module = await moduleTask.Value;
+            return await module.InvokeAsync<string>("toDataURL", canvas, type);
+        }
+
         public async ValueTask DisposeAsync()
         {
             if (moduleTask.IsValueCreated)

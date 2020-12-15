@@ -6,6 +6,7 @@
 
 @code {
     ElementReference canvas;
+    CanvasContext context;
 
     [Parameter]
     public long Height { get; set; }
@@ -19,6 +20,11 @@
     public async ValueTask<CanvasContext> GetContextAsync() 
     {
         var cxt = await CanvasInterop.GetContextAsync(canvas);
-        return new CanvasContext(CanvasInterop, cxt);
+        return context ??= new CanvasContext(CanvasInterop, cxt);
+    }
+
+    public ValueTask<string> ToDataUrlAsync(string type = "img/png") 
+    {
+        return CanvasInterop.ToDataUrlAsync(canvas, type);
     }
 }
