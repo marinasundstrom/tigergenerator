@@ -1,19 +1,12 @@
 ﻿@page "/"
 
-@if(isLoaded && bildLoader != null) 
-{
-    foreach(var bildLoad in bildLoader.Where(b => !string.IsNullOrEmpty(b.id))) 
-    {
-        <Tigergenerator.Components.Image Id="@bildLoad.id" Dir="@bildLoad.dir" Src="@($"/img/{bildLoad.dir}/{bildLoad.id.ToUpper()}.png")" Items="@bilder"></Tigergenerator.Components.Image>
-    }
-}
 
 <section class="jumbotron text-center" style="background-color: @bakgrundsfarg !important">
     <div class="container">
       <h1>Tigergenerator 2.0</h1>
       <p class="lead text-muted">Med rätt att få göra satir.</p>
 
-      <BECanvas Width="1000" Height="625" @ref="_canvasReference"></BECanvas>
+      <Canvas.Canvas2D Width="1000" Height="625" @ref="_canvasReference" />
 
         @if(isLoaded) 
         {

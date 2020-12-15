@@ -1,0 +1,24 @@
+﻿@inject CanvasInterop CanvasInterop
+
+<canvas @ref="canvas" height="@Height" width="@Width" @attributes="AdditionalAttributes">
+    
+</canvas>
+
+@code {
+    ElementReference canvas;
+
+    [Parameter]
+    public long Height { get; set; }
+
+    [Parameter]
+    public long Width { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
+
+    public async ValueTask<CanvasContext> GetContextAsync() 
+    {
+        var cxt = await CanvasInterop.GetContextAsync(canvas);
+        return new CanvasContext(CanvasInterop, cxt);
+    }
+}

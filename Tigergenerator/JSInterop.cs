@@ -5,31 +5,45 @@ using System.Threading.Tasks;
 using System.Text;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components;
+using System.Reflection;
 
 namespace Tigergenerator
 {
-    public class JSInterop
+    public class JSInterop : IAsyncDisposable
     {
-        private IJSRuntime jsRuntime;
+        private readonly Lazy<Task<IJSObjectReference>> moduleTask;
 
-        public JSInterop(IJSRuntime jsRuntime) 
+        public JSInterop(IJSRuntime jsRuntime)
         {
-            this.jsRuntime = jsRuntime;
+            moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
+               "import", "./js/interop.js").AsTask());
         }
 
-        public ValueTask<ElementReference> LoadImage(string path) 
+        public async ValueTask<IJSObjectReference> LoadImage(string path)
         {
-            return jsRuntime.InvokeAsync<ElementReference>("tigergeneratorInterop.loadImage", path);
+            var module = await moduleTask.Value;
+            return await module.InvokeAsync<IJSObjectReference>("loadImage", path);
         }
 
-        public ValueTask ScrollToTopAsync() 
+        public async ValueTask ScrollToTopAsync() 
         {
-            return jsRuntime.InvokeVoidAsync("tigergeneratorInterop.scrollToTop");
+            var module = await moduleTask.Value;
+            await module.InvokeVoidAsync("scrollToTop");
         }
         
-        public ValueTask ScrollToBottomAsync() 
+        public async ValueTask ScrollToBottomAsync() 
         {
-            return jsRuntime.InvokeVoidAsync("tigergeneratorInterop.scrollToBottom");
+            var module = await moduleTask.Value;
+            await module.InvokeVoidAsync("scrollToBottom");
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (moduleTask.IsValueCreated)
+            {
+                var module = await moduleTask.Value;
+                await module.DisposeAsync();
+            }
         }
     }
 }

@@ -13,15 +13,13 @@ export function loadImage(path) {
         image.hidden = true;
         document.body.append(image);
     });
-}
-;
+};
+
 export function scrollToTop() {
     window.scrollTo(0, 0);
-}
-;
+};
+
 export function scrollToBottom() {
     var elmnt = document.getElementById("attributesHeader");
     elmnt.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-}
-;
-//# sourceMappingURL=interop.js.map
+};

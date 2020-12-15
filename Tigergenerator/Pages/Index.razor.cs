@@ -1,6 +1,6 @@
-﻿using Blazor.Extensions;
-using Blazor.Extensions.Canvas.Canvas2D;
+﻿using Canvas;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +19,8 @@ namespace Tigergenerator.Pages
         public JSInterop JSInterop { get; set; }
 
         bool isLoaded = false;
+
+        ElementReference c;
 
         ElementReference sprite;
         ElementReference sprite2;
@@ -44,11 +46,11 @@ namespace Tigergenerator.Pages
         IDictionary<string, string> accessoarer = null;
         IDictionary<string, string> farger = null;
 
-        IDictionary<string, ElementReference> bilder = null;
+        IDictionary<string, IJSObjectReference> bilder = null;
 
-        private Canvas2DContext _context;
+        private CanvasContext _context;
 
-        protected BECanvasComponent _canvasReference;
+        protected Canvas2D _canvasReference;
 
         Random random = new Random();
 
@@ -69,7 +71,7 @@ namespace Tigergenerator.Pages
             { "Gul", "yellow" }
         };
 
-            bilder = new Dictionary<string, ElementReference>();
+            bilder = new Dictionary<string, IJSObjectReference>();
 
             await LoadImages("kroppar1", kroppar);
             await LoadImages("kroppar2", kroppar);
@@ -79,23 +81,26 @@ namespace Tigergenerator.Pages
             await LoadImages("accessoarer", accessoarer);
 
             isLoaded = true;
+
+            await GetRandomTiger();
         }
 
-        List<(string dir, string id)> bildLoader = new List<(string dir, string id)>();
-
-        public async Task LoadImages(string dir, IDictionary<string, string> keyValues)
+        public async ValueTask LoadImages(string dir, IDictionary<string, string> keyValues)
         {
             foreach (var kv in keyValues)
             {
-                //bilder[kv.Value] = await LoadImage(dir, kv.Value);
+                if (string.IsNullOrEmpty(kv.Value))
+                {
+                    continue;
+                }
 
-                bildLoader.Add((dir: dir, id: kv.Value));
+                bilder[$"{dir}.{kv.Value}"] = await LoadImage(dir, kv.Value);
             }
         }
 
-        public async Task<ElementReference> LoadImage(string dir, string value)
+        public ValueTask<IJSObjectReference> LoadImage(string dir, string value)
         {
-            return await JSInterop.LoadImage($"/img/{dir}/{value.ToUpper()}.png");
+            return JSInterop.LoadImage($"/img/{dir}/{value.ToUpper()}.png");
         }
 
         private async Task ScrollDown()
@@ -105,7 +110,7 @@ namespace Tigergenerator.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            this._context = await this._canvasReference.CreateCanvas2DAsync();
+            this._context = await this._canvasReference.GetContextAsync();
         }
 
         public async Task Generate()
@@ -126,6 +131,8 @@ namespace Tigergenerator.Pages
                 await this._context.SetFillStyleAsync(bakgrundsfarg);
                 await this._context.FillRectAsync(0, 0, _canvasReference.Width, _canvasReference.Height);
             }
+
+            //await this.JSInterop.DrawImage(c, await JSInterop.LoadImage2($"/img/hattar/afro.png"), 0, 0, _canvasReference.Width, _canvasReference.Height);
 
             if (!string.IsNullOrEmpty(kropp1))
             {
@@ -191,8 +198,6 @@ namespace Tigergenerator.Pages
 
         private string GetRandom(IDictionary<string, string> dictionary)
         {
-            //Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(dictionary));
-
             return dictionary.ElementAt(random.Next(0, dictionary.Count)).Value;
         }
 
