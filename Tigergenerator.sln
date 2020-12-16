@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.808.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tigergenerator", "Tigergenerator\Tigergenerator.csproj", "{F2747DA2-0543-48EB-B387-885F5582D1A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canvas", "Canvas\Canvas.csproj", "{67EBFACE-AB71-4F25-8669-0CA67BA9E67D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Canvas", "Canvas\Canvas.csproj", "{67EBFACE-AB71-4F25-8669-0CA67BA9E67D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C5D781B9-EE8F-4CA6-A8DA-A850B4D6A317}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
