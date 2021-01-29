@@ -6,6 +6,16 @@ Denna app är i sig en utökning av humorprogrammet *Svenska nyheters* Tigergene
 
 Tack till SVT och de andra personerna bakom. Utan deras initiativ så hade denna webapp aldrig blivit till.
 
+## Skärmdumpar
+
+### Huvudvy
+
+<img src="screenshots/screenshot1.png" />
+
+### Attribut
+
+<img src="screenshots/screenshot2.png" />
+
 ## Tillägg
 
 * Fritext
