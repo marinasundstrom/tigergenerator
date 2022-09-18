@@ -37,74 +37,110 @@
                 <div class="row">
                     <div class="form-group col-md mt-4">
                         <label for="exampleFormControlSelect1" class="mb-2">Kropp</label>
-                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@kropp1">
-                            @foreach (var kropp in kroppar)
-                            {
-                                <option value="@kropp.Value">@kropp.Key</option>
-                            }
-                        </InputSelect>
+                        <div class="input-group mb-3">
+                            <InputSelect class="form-select" id="exampleFormControlSelect1" @bind-Value="@kropp1">
+                                @foreach (var kropp in kroppar)
+                                {
+                                    <option value="@kropp.Value">@kropp.Key</option>
+                                }
+                            </InputSelect>
+                            <button type="button" class="btn btn-outline-secondary" @onclick="RandomKropp">
+                                <i class="oi oi-random"></i>
+                            </button>
+                        </div>
                     </div>
+
                     <div class="form-group col-md mt-4">
                         <label for="exampleFormControlSelect1" class="mb-2">Ränder</label>
-                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@kropp2">
-                            @foreach (var kropp in kroppar)
-                            {
-                                <option value="@kropp.Value">@kropp.Key</option>
-                            }
-                        </InputSelect>
+                        <div class="input-group mb-3">
+                            <InputSelect class="form-select" id="exampleFormControlSelect1" @bind-Value="@kropp2">
+                                @foreach (var kropp in kroppar)
+                                {
+                                    <option value="@kropp.Value">@kropp.Key</option>
+                                }
+                            </InputSelect>
+                            <button type="button" class="btn btn-outline-secondary" @onclick="RandomRander">
+                                <i class="oi oi-random"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md mt-4">
                         <label for="exampleFormControlSelect1" class="mb-2">Ansikte</label>
-                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@ansikte">
-                            @foreach (var a in ansikten)
-                            {
-                                <option value="@a.Value">@a.Key</option>
-                            }
-                        </InputSelect>
+                        <div class="input-group mb-3">
+                            <InputSelect class="form-select" id="exampleFormControlSelect1" @bind-Value="@ansikte">
+                                @foreach (var a in ansikten)
+                                {
+                                    <option value="@a.Value">@a.Key</option>
+                                }
+                            </InputSelect>
+                            <button type="button" class="btn btn-outline-secondary" @onclick="RandomAnsikte">
+                                <i class="oi oi-random"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="form-group col-md mt-4">
                         <label for="exampleFormControlSelect1" class="mb-2">Hatt</label>
-                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@hatt">
-                            @foreach (var h in hattar)
-                            {
-                                <option value="@h.Value">@h.Key</option>
-                            }
-                        </InputSelect>
+                        <div class="input-group mb-3">
+                            <InputSelect class="form-select" id="exampleFormControlSelect1" @bind-Value="@hatt">
+                                @foreach (var h in hattar)
+                                {
+                                    <option value="@h.Value">@h.Key</option>
+                                }
+                            </InputSelect>
+                            <button type="button" class="btn btn-outline-secondary" @onclick="RandomHatt">
+                                <i class="oi oi-random"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md mt-4">
                         <label for="exampleFormControlSelect1" class="mb-2">Bindel</label>
-                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@bindel">
-                            @foreach (var b in bindlar)
-                            {
-                                <option value="@b.Value">@b.Key</option>
-                            }
-                        </InputSelect>
+                        <div class="input-group mb-3">
+                            <InputSelect class="form-select" id="exampleFormControlSelect1" @bind-Value="@bindel">
+                                @foreach (var b in bindlar)
+                                {
+                                    <option value="@b.Value">@b.Key</option>
+                                }
+                            </InputSelect>
+                            <button type="button" class="btn btn-outline-secondary" @onclick="RandomBindel">
+                                <i class="oi oi-random"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="form-group col-md mt-4">
                         <label for="exampleFormControlSelect1" class="mb-2">Accessoar</label>
-                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@accessoar">
-                            @foreach (var a in accessoarer)
-                            {
-                                <option value="@a.Value">@a.Key</option>
-                            }
-                        </InputSelect>
+                        <div class="input-group mb-3">
+                            <InputSelect class="form-select" id="exampleFormControlSelect1" @bind-Value="@accessoar">
+                                @foreach (var a in accessoarer)
+                                {
+                                    <option value="@a.Value">@a.Key</option>
+                                }
+                            </InputSelect>
+                            <button type="button" class="btn btn-outline-secondary" @onclick="RandomAccessoar">
+                                <i class="oi oi-random"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-group mt-4">
                     <label for="exampleFormControlSelect1" class="mb-2">Välj text</label>
-                    <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@text">
-                        @foreach (var t in texter)
-                        {
-                            <option value="@t">@t</option>
-                        }
-                    </InputSelect>
+                    <div class="input-group mb-3">
+                        <InputSelect class="form-select" id="exampleFormControlSelect1" @bind-Value="@text">
+                            @foreach (var t in texter)
+                            {
+                                <option value="@t">@t</option>
+                            }
+                        </InputSelect>
+                        <button type="button" class="btn btn-outline-secondary" @onclick="RandomText">
+                            <i class="oi oi-random"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="form-group mt-4">
@@ -115,7 +151,7 @@
                 <div class="row">
                     <div class="form-group col-md mt-4">
                         <label for="exampleFormControlSelect1" class="mb-2">Textfärg</label>
-                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@textfarg">
+                        <InputSelect class="form-select" id="exampleFormControlSelect1" @bind-Value="@textfarg">
                             @foreach (var c in farger)
                             {
                                 <option value="@c.Value">@c.Key</option>
@@ -124,7 +160,7 @@
                     </div>
                     <div class="form-group col-md mt-4">
                         <label for="exampleFormControlSelect1" class="mb-2">Bakgrundsfärg</label>
-                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@bakgrundsfarg">
+                        <InputSelect class="form-select" id="exampleFormControlSelect1" @bind-Value="@bakgrundsfarg">
                             @foreach (var c in bakgrundFarger)
                             {
                                 <option value="@c.Value">@c.Key</option>

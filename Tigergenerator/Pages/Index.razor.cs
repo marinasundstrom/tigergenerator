@@ -178,18 +178,12 @@ namespace Tigergenerator.Pages
 
         public async Task GetRandomTiger()
         {
-            kropp1 = GetRandom(kroppar);
+            RandomKropp();
+            RandomRander();
 
-            kropp2 = GetRandom(kroppar);
-
-            while (kropp1 == kropp2)
-            {
-                kropp2 = GetRandom(kroppar);
-            }
-
-            ansikte = GetRandom(ansikten);
-            hatt = GetRandom(hattar);
-            bindel = GetRandom(bindlar);
+            RandomAnsikte();
+            RandomHatt();
+            RandomBindel();
 
             /*
             while(bindel == "hakkors") 
@@ -198,11 +192,56 @@ namespace Tigergenerator.Pages
             }
             */
 
-            accessoar = GetRandom(accessoarer);
+            RandomAccessoar();
 
-            text = GetRandom(texter);
+            RandomText();
 
             await GenerateInternal();
+        }
+
+        private void RandomKropp()
+        {
+            kropp1 = GetRandom(kroppar);
+
+            while (kropp1 == kropp2)
+            {
+                kropp2 = GetRandom(kroppar);
+            }
+        }
+
+        private void RandomRander()
+        {
+            kropp2 = GetRandom(kroppar);
+
+            while (kropp1 == kropp2)
+            {
+                kropp2 = GetRandom(kroppar);
+            }
+        }
+
+        private void RandomAnsikte()
+        {
+            ansikte = GetRandom(ansikten);
+        }
+
+        private void RandomHatt()
+        {
+            hatt = GetRandom(hattar);
+        }
+
+        private void RandomBindel()
+        {
+            bindel = GetRandom(bindlar);
+        }
+
+        private void RandomAccessoar()
+        {
+            accessoar = GetRandom(accessoarer);
+        }
+
+        private void RandomText()
+        {
+            text = GetRandom(texter);
         }
 
         private string GetRandom(IDictionary<string, string> dictionary)
