@@ -1,4 +1,4 @@
-export function loadImage(path) {
+﻿export function loadImage(path: string) {
     return new Promise((resolve, error) => {
         const image = new Image();
         image.id = path;

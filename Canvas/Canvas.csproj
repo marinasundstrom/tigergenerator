@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 	</PropertyGroup>
 
   
@@ -10,12 +10,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="LibSassBuilder" Version="1.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.1" />
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.1.2">
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.9" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.8.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="AspNetCore.SassCompiler" Version="1.54.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\css\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
+  </ItemGroup>
 </Project>

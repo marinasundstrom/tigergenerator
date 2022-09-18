@@ -45,6 +45,7 @@ namespace Tigergenerator.Pages
         IDictionary<string, string> bindlar = null;
         IDictionary<string, string> accessoarer = null;
         IDictionary<string, string> farger = null;
+        IDictionary<string, string> bakgrundFarger = null;
 
         IDictionary<string, IJSObjectReference> bilder = null;
 
@@ -64,12 +65,16 @@ namespace Tigergenerator.Pages
             accessoarer = await Http.GetFromJsonAsync<Dictionary<string, string>>("/accessoarer.json");
 
             farger = new Dictionary<string, string>() {
-            { "Ingen", "" },
-            { "Vit", "white" },
-            { "Svart", "black" },
-            { "Ljusblå", "lightblue" },
-            { "Gul", "yellow" }
-        };
+                { "Vit", "white" },
+                { "Svart", "black" },
+                { "Ljusblå", "lightblue" },
+                { "Gul", "yellow" }
+            };
+
+            var fargerList = farger.ToList();
+            fargerList.Insert(0, new KeyValuePair<string, string>("Ingen", ""));
+
+            bakgrundFarger = new Dictionary<string, string>(fargerList);
 
             bilder = new Dictionary<string, IJSObjectReference>();
 
@@ -94,7 +99,7 @@ namespace Tigergenerator.Pages
                     continue;
                 }
 
-                bilder[$"{dir}.{kv.Value}"] = await LoadImage(dir, kv.Value);
+                bilder[$"{dir}.{kv.Value}"] = await LoadImage(dir, kv.Value);
             }
         }
 
@@ -137,8 +142,6 @@ namespace Tigergenerator.Pages
                 await this._context.SetFillStyleAsync(bakgrundsfarg);
                 await this._context.FillRectAsync(0, 0, _canvasReference.Width, _canvasReference.Height);
             }
-
-            //await this.JSInterop.DrawImage(c, await JSInterop.LoadImage2($"/img/hattar/afro.png"), 0, 0, _canvasReference.Width, _canvasReference.Height);
 
             if (!string.IsNullOrEmpty(kropp1))
             {

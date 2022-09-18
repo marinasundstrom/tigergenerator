@@ -3,139 +3,143 @@
 
 <section class="jumbotron text-center" style="background-color: @bakgrundsfarg !important">
     <div class="container">
-      <h1>Tigergenerator 2.0</h1>
-      <p class="lead text-muted">Med rätt att få göra satir.</p>
+        <h1>Tigergenerator 2.0</h1>
+        <p class="lead text-muted">Med rätt att få göra satir.</p>
 
-      <Canvas2D Width="1000" Height="625" @ref="_canvasReference" />
+        <Canvas2D Width="1000" Height="625" @ref="_canvasReference" />
 
-        @if(isLoaded) 
+        @if (isLoaded)
         {
             <p class="mt-5">
                 <a href="#" class="btn btn-lg btn-primary my-2" @onclick="GetRandomTiger"><i class="oi oi-random"></i> Slumpa fram</a>
                 <a href="#" class="btn btn-lg btn-secondary my-2" @onclick="ScrollDown" @onclick:preventDefault><i class="oi oi-arrow-bottom"></i> Anpassa</a>
-                @*<a href="#" class="btn btn-lg btn-secondary my-2 ml-md-4" @onclick="Share" @onclick:preventDefault><i class="oi oi-share"></i> Dela</a>*@            
+                @*<a href="#" class="btn btn-lg btn-secondary my-2 ml-md-4" @onclick="Share" @onclick:preventDefault><i class="oi oi-share"></i> Dela</a>*@
             </p>
         }
     </div>
-  </section>
+</section>
 
 <div class="py-5 bg-light">
 
-@if(!isLoaded) {
-    <p>Laddar...</p>
-} else {
+    @if (!isLoaded)
+    {
+        <p>Laddar...</p>
+    }
+    else
+    {
 
-<div class="container">
+        <div class="container">
 
-    <h2 id="attributesHeader">Attribut</h2>
+            <h2 id="attributesHeader">Attribut</h2>
 
-<EditForm Model="@this" OnValidSubmit="Generate" class="mt-5">
+            <EditForm Model="@this" OnValidSubmit="Generate" class="mt-5">
 
-  <div class="row">
-    <div class="form-group col-md">
-      <label for="exampleFormControlSelect1">Kropp 1</label>
-      <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@kropp1">
-       @foreach (var kropp in kroppar)
-       {
-           <option value="@kropp.Value">@kropp.Key</option>
-       }
-     </InputSelect>    
-     </div>
-    <div class="form-group col-md">
-        <label for="exampleFormControlSelect1">Kropp 2</label>
-        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@kropp2">
-        @foreach (var kropp in kroppar)
-        {
-            <option value="@kropp.Value">@kropp.Key</option>
-        }
-        </InputSelect>  
-    </div>
-  </div>
+                <div class="row">
+                    <div class="form-group col-md mt-4">
+                        <label for="exampleFormControlSelect1" class="mb-2">Kropp 1</label>
+                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@kropp1">
+                            @foreach (var kropp in kroppar)
+                            {
+                                <option value="@kropp.Value">@kropp.Key</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <div class="form-group col-md mt-4">
+                        <label for="exampleFormControlSelect1" class="mb-2">Kropp 2</label>
+                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@kropp2">
+                            @foreach (var kropp in kroppar)
+                            {
+                                <option value="@kropp.Value">@kropp.Key</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
 
-    <div class="row">
-        <div class="form-group col-md">
-        <label for="exampleFormControlSelect1">Ansikte</label>
-        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@ansikte">
-        @foreach (var a in ansikten)
-        {
-            <option value="@a.Value">@a.Key</option>
-        }
-        </InputSelect>    
+                <div class="row">
+                    <div class="form-group col-md mt-4">
+                        <label for="exampleFormControlSelect1" class="mb-2">Ansikte</label>
+                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@ansikte">
+                            @foreach (var a in ansikten)
+                            {
+                                <option value="@a.Value">@a.Key</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <div class="form-group col-md mt-4">
+                        <label for="exampleFormControlSelect1" class="mb-2">Hatt</label>
+                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@hatt">
+                            @foreach (var h in hattar)
+                            {
+                                <option value="@h.Value">@h.Key</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md mt-4">
+                        <label for="exampleFormControlSelect1" class="mb-2">Bindel</label>
+                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@bindel">
+                            @foreach (var b in bindlar)
+                            {
+                                <option value="@b.Value">@b.Key</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <div class="form-group col-md mt-4">
+                        <label for="exampleFormControlSelect1" class="mb-2">Accessoar</label>
+                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@accessoar">
+                            @foreach (var a in accessoarer)
+                            {
+                                <option value="@a.Value">@a.Key</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+
+                <div class="form-group mt-4">
+                    <label for="exampleFormControlSelect1" class="mb-2">Välj text</label>
+                    <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@text">
+                        @foreach (var t in texter)
+                        {
+                            <option value="@t">@t</option>
+                        }
+                    </InputSelect>
+                </div>
+
+                <div class="form-group mt-4">
+                    <label for="exampleFormControlInput1">Egen text</label>
+                    <InputText type="text" class="form-control textinput" id="exampleFormControlInput1" placeholder="En svensk tiger" @bind-Value="text" />
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md mt-4">
+                        <label for="exampleFormControlSelect1" class="mb-2">Textfärg</label>
+                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@textfarg">
+                            @foreach (var c in farger)
+                            {
+                                <option value="@c.Value">@c.Key</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <div class="form-group col-md mt-4">
+                        <label for="exampleFormControlSelect1" class="mb-2">Bakgrundsfärg</label>
+                        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@bakgrundsfarg">
+                            @foreach (var c in bakgrundFarger)
+                            {
+                                <option value="@c.Value">@c.Key</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+
+                <div class="text-center" style="margin-top: 2.5em">
+                    <button class="btn btn-lg btn-primary"><i class="oi oi-reload"></i> Generera</button>
+                </div>
+
+            </EditForm>
         </div>
-        <div class="form-group col-md">
-        <label for="exampleFormControlSelect1">Hatt</label>
-        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@hatt">
-        @foreach (var h in hattar)
-        {
-            <option value="@h.Value">@h.Key</option>
-        }
-        </InputSelect>    </div>
-    </div>
 
-    <div class="row">
-        <div class="form-group col-md">
-        <label for="exampleFormControlSelect1">Bindel</label>
-        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@bindel">
-        @foreach (var b in bindlar)
-        {
-            <option value="@b.Value">@b.Key</option>
-        }
-        </InputSelect>    
-        </div>
-        <div class="form-group col-md">
-        <label for="exampleFormControlSelect1">Accessoar</label>
-        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@accessoar">
-        @foreach (var a in accessoarer)
-        {
-            <option value="@a.Value">@a.Key</option>
-        }
-        </InputSelect>    
-        </div>
-    </div>
-
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Välj text</label>
-      <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@text">
-       @foreach (var t in texter)
-       {
-           <option value="@t">@t</option>
-       }
-     </InputSelect>
-   </div>
-
-   <div class="form-group">
-     <label for="exampleFormControlInput1">Egen text</label>
-     <InputText type="text" class="form-control textinput" id="exampleFormControlInput1" placeholder="En svensk tiger" @bind-Value="text" />
-   </div>
-
-    <div class="row">
-        <div class="form-group col-md">
-        <label for="exampleFormControlSelect1">Textfärg</label>
-        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@textfarg">
-        @foreach (var c in farger)
-        {
-            <option value="@c.Value">@c.Key</option>
-        }
-        </InputSelect>    
-        </div>
-        <div class="form-group col-md">
-        <label for="exampleFormControlSelect1">Bakgrundsfärg</label>
-        <InputSelect class="form-control" id="exampleFormControlSelect1" @bind-Value="@bakgrundsfarg">
-        @foreach (var c in farger)
-        {
-            <option value="@c.Value">@c.Key</option>
-        }
-        </InputSelect>    
-        </div>
-    </div>
-
-    <div class="text-center m-4">
-        <button class="btn btn-lg btn-primary"><i class="oi oi-reload"></i> Generera</button>
-    </div>
-
-</EditForm>
-</div>
-
-}
+    }
 
 </div>
