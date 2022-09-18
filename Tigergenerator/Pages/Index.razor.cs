@@ -215,7 +215,7 @@ namespace Tigergenerator.Pages
 
             while (kropp1 == kropp2)
             {
-                kropp2 = GetRandom(kroppar);
+                kropp1 = GetRandom(kroppar);
             }
         }
 
