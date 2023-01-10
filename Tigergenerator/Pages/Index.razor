@@ -129,24 +129,19 @@
                     </div>
                 </div>
 
-                <div class="form-group mt-4">
-                    <label for="exampleFormControlSelect1" class="mb-2">Välj text</label>
-                    <div class="input-group mb-3">
-                        <InputSelect class="form-select" id="exampleFormControlSelect1" @bind-Value="@text">
-                            @foreach (var t in texter)
-                            {
-                                <option value="@t">@t</option>
-                            }
-                        </InputSelect>
-                        <button type="button" class="btn btn-outline-secondary" @onclick="RandomText">
-                            <i class="oi oi-random"></i>
-                        </button>
+                <div class="row">
+                    <div class="form-group mt-4 mb-3">
+                        <label for="exampleFormControlInput1" class="mb-2">Text</label>
+                        <InputText list="text" type="text" class="form-control textinput" id="exampleFormControlInput1" placeholder="En svensk tiger" @bind-Value="text" />
+                        <small class="text-muted">Välj eller skriv egen</small>
                     </div>
-                </div>
 
-                <div class="form-group mt-4">
-                    <label for="exampleFormControlInput1">Egen text</label>
-                    <InputText type="text" class="form-control textinput" id="exampleFormControlInput1" placeholder="En svensk tiger" @bind-Value="text" />
+                    <datalist id="text">
+                        @foreach (var t in texter)
+                        {
+                            <option value="@t">@t</option>
+                        }
+                    </datalist>
                 </div>
 
                 <div class="row">
