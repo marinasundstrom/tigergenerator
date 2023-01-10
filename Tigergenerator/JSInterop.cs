@@ -37,6 +37,12 @@ namespace Tigergenerator
             await module.InvokeVoidAsync("scrollToBottom");
         }
 
+        public async ValueTask DownloadCanvasAsImage(string elementId)
+        {
+            var module = await moduleTask.Value;
+            await module.InvokeVoidAsync("downloadCanvasAsImage", elementId);
+        }
+
         public async ValueTask DisposeAsync()
         {
             if (moduleTask.IsValueCreated)

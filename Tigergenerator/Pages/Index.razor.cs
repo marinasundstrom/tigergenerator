@@ -49,6 +49,8 @@ namespace Tigergenerator.Pages
 
         IDictionary<string, IJSObjectReference> bilder = null;
 
+        string canvasId = "myCanvas";
+
         private CanvasContext _context;
 
         protected Canvas2D _canvasReference;
@@ -252,6 +254,11 @@ namespace Tigergenerator.Pages
         private string GetRandom(IEnumerable<string> items)
         {
             return items.ElementAt(random.Next(0, items.Count()));
+        }
+
+        private async Task DownloadImage()
+        {
+            await JSInterop.DownloadCanvasAsImage(canvasId);
         }
     }
 }

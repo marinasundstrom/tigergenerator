@@ -20,6 +20,14 @@ export function scrollToTop() {
 }
 
 export function scrollToBottom() {
-    var elmnt = document.getElementById("attributesHeader");
+    const elmnt = document.getElementById("attributesHeader");
     elmnt.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+}
+
+export function downloadCanvasAsImage(elementId) {
+    const canvas = document.getElementById(elementId) as HTMLCanvasElement;
+    const anchor = document.createElement("a");
+    anchor.href = canvas.toDataURL("image/png");
+    anchor.download = "tiger.png"
+    anchor.click();
 }
