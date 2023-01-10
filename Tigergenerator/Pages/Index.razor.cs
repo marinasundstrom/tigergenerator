@@ -36,6 +36,7 @@ namespace Tigergenerator.Pages
 
         string textfarg = "black";
         string bakgrundsfarg = null;
+        string aktivBakgrundsfarg = null;
 
         string[] texter = new string[0];
 
@@ -143,6 +144,8 @@ namespace Tigergenerator.Pages
             {
                 await this._context.SetFillStyleAsync(bakgrundsfarg);
                 await this._context.FillRectAsync(0, 0, _canvasReference.Width, _canvasReference.Height);
+
+                aktivBakgrundsfarg = bakgrundsfarg;
             }
 
             if (!string.IsNullOrEmpty(kropp1))
