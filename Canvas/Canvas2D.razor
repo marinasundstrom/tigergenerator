@@ -1,15 +1,12 @@
 ﻿@inject CanvasInterop CanvasInterop
 
-<canvas @ref="canvas" id="@Id" height="@Height" width="@Width" @attributes="AdditionalAttributes">
+<canvas @ref="canvas" height="@Height" width="@Width" @attributes="AdditionalAttributes">
     
 </canvas>
 
 @code {
     ElementReference canvas;
     CanvasContext context;
-
-    [Parameter]
-    public string Id { get; set; }
 
     [Parameter]
     public long Height { get; set; }
