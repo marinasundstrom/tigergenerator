@@ -1,9 +1,10 @@
-﻿using Microsoft.JSInterop;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using Microsoft.JSInterop;
 
 namespace Canvas
 {
@@ -15,7 +16,7 @@ namespace Canvas
             this.canvasObject = canvasObject;
         }
 
-        private IJSObjectReference canvasObject;
+        private readonly IJSObjectReference canvasObject;
         private readonly CanvasInterop canvasInterop;
 
         public async ValueTask ClearRectAsync(int dx, int dy, long dWidth, long dHeight)

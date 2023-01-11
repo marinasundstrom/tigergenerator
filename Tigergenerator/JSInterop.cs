@@ -1,11 +1,12 @@
 using System;
-using System.Net.Http;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Text;
-using Microsoft.JSInterop;
-using Microsoft.AspNetCore.Components;
+using System.Net.Http;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace Tigergenerator
 {
@@ -25,13 +26,13 @@ namespace Tigergenerator
             return await module.InvokeAsync<IJSObjectReference>("loadImage", path);
         }
 
-        public async ValueTask ScrollToTopAsync() 
+        public async ValueTask ScrollToTopAsync()
         {
             var module = await moduleTask.Value;
             await module.InvokeVoidAsync("scrollToTop");
         }
-        
-        public async ValueTask ScrollToBottomAsync() 
+
+        public async ValueTask ScrollToBottomAsync()
         {
             var module = await moduleTask.Value;
             await module.InvokeVoidAsync("scrollToBottom");

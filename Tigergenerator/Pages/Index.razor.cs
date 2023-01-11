@@ -1,12 +1,14 @@
-﻿using Canvas;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+
+using Canvas;
+
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace Tigergenerator.Pages
 {
@@ -19,12 +21,10 @@ namespace Tigergenerator.Pages
         public JSInterop JSInterop { get; set; }
 
         bool isLoaded = false;
-
-        ElementReference c;
-
-        ElementReference sprite;
-        ElementReference sprite2;
-        ElementReference sprite3;
+        readonly ElementReference c;
+        readonly ElementReference sprite;
+        readonly ElementReference sprite2;
+        readonly ElementReference sprite3;
 
         string text = "En svensk tiger";
         string kropp1 = "gul";
@@ -49,14 +49,12 @@ namespace Tigergenerator.Pages
         IDictionary<string, string> bakgrundFarger = null;
 
         IDictionary<string, IJSObjectReference> bilder = null;
-
-        string canvasId = "myCanvas";
+        readonly string canvasId = "myCanvas";
 
         private CanvasContext _context;
 
         protected Canvas2D _canvasReference;
-
-        Random random = new Random();
+        readonly Random random = new Random();
 
         protected override async Task OnInitializedAsync()
         {
