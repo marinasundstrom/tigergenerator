@@ -145,6 +145,10 @@ namespace Tigergenerator.Pages
 
                 aktivBakgrundsfarg = bakgrundsfarg;
             }
+            else
+            {
+                aktivBakgrundsfarg = null;
+            }
 
             if (!string.IsNullOrEmpty(kropp1))
             {
