@@ -132,7 +132,12 @@
                 <div class="row">
                     <div class="form-group mt-4 mb-3">
                         <label for="exampleFormControlInput1" class="mb-2">Text</label>
-                        <InputText list="text" type="text" class="form-control textinput" id="exampleFormControlInput1" placeholder="En svensk tiger" @bind-Value="text" />
+                        <div class="input-group mb-2">
+                            <InputText list="text" type="text" class="form-control textinput" id="exampleFormControlInput1" placeholder="En svensk tiger" @bind-Value="text" />
+                            <button type="button" class="btn btn-outline-secondary" @onclick="RandomText">
+                                <i class="oi oi-random"></i>
+                            </button>
+                        </div>
                         <small class="text-muted">Välj eller skriv egen</small>
                     </div>
 
