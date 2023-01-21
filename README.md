@@ -6,6 +6,20 @@ Denna app är i sig en utökning av humorprogrammet *Svenska nyheters* Tigergene
 
 Tack till SVT och de andra personerna bakom. Utan deras initiativ så hade denna webapp aldrig blivit till.
 
+## Bakgrund
+
+["En svensk tiger"](https://sv.wikipedia.org/wiki/En_svensk_tiger) är en symbol från 1941 som skapades av illustratören [Bertil Almqvist](https://sv.wikipedia.org/wiki/Bertil_Almqvist) (1902- 1972) för en kampanj på uppdrag av Statens informationsstyrelse. Själva kampanjen är tänkt att uppmana befolkningen att hålla tyst. Att tiga, om svenska angelägenheter. Samtidigt så ger det ett intryck om att den svenska befolkningen är stark, smidig och lite farlig, som kattdjuret tigern. Att vara stark i den rådande situationen.
+
+Det är en propagandasymbol som sedermera varit föremål för flertalet rättvister.
+
+Den ekonomiska nyttjanderätten innehas av [Beredskapet](https://sv.wikipedia.org/wiki/Beredskapsmuseet) som har varit väldigt beskyddande av varumärket "En Svensk Tiger".
+
+När författaren och komikern Aron Flam sedan valde att använda en rejält omarbetad satirisk version av verket till omslaget för sin bok "Det här är en Svensk tiger" så stämdes han av Beredskapsmuseet som hävdade att det han gjort inte alls var satir.
+
+Förlagan til denna "Tigergenerator" uppkom under rättegångens tid. Den [ursprungliga webbappen](https://tiger.svt.se/) från vilken denna app hämtar sin inspiration skapades åt Sveriges Televisions satirprogram "Svenska nyheter" för att stödja satiren.
+
+Rätten fastslog att Aron Flams omarbete var tillräckligt originellt och han friades av rätten.
+
 ## Skärmdumpar
 
 ### Huvudvy
