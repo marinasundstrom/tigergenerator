@@ -8,7 +8,7 @@ Tack till SVT och de andra personerna bakom. Utan deras initiativ så hade denna
 
 ## Bakgrund
 
-["En svensk tiger"](https://sv.wikipedia.org/wiki/En_svensk_tiger) är en symbol från 1941 som skapades av illustratören [Bertil Almqvist](https://sv.wikipedia.org/wiki/Bertil_Almqvist) (1902- 1972) för en kampanj på uppdrag av Statens informationsstyrelse. Själva kampanjen är tänkt att uppmana befolkningen att hålla tyst. Att tiga, om svenska angelägenheter. Samtidigt så ger det ett intryck om att den svenska befolkningen är stark, smidig och lite farlig, som kattdjuret tigern. Att vara stark i den rådande situationen.
+["En svensk tiger"](https://sv.wikipedia.org/wiki/En_svensk_tiger) är en symbol från 1941 som skapades av illustratören [Bertil Almqvist](https://sv.wikipedia.org/wiki/Bertil_Almqvist) (1902- 1972) för en kampanj på uppdrag av Statens informationsstyrelse. Själva kampanjen var tänkt att uppmana befolkningen att hålla tyst. Att tiga, om svenska angelägenheter. Samtidigt så ger det ett intryck om att den svenska befolkningen är stark, smidig och lite farlig, som kattdjuret tigern. Att vara stark i den rådande situationen.
 
 Det är en propagandasymbol som sedermera varit föremål för flertalet rättvister.
 
@@ -18,7 +18,7 @@ När författaren och komikern Aron Flam sedan valde att använda en rejält oma
 
 Förlagan til denna "Tigergenerator" uppkom under rättegångens tid. Den [ursprungliga webbappen](https://tiger.svt.se/) från vilken denna app hämtar sin inspiration skapades åt Sveriges Televisions satirprogram "Svenska nyheter" för att stödja satiren.
 
-Rätten fastslog att Aron Flams omarbete var tillräckligt originellt och han friades av rätten.
+I hovrätten fastslog att Aron Flams omarbetning var tillräckligt originell (hade "verkshöjd") och han friades.
 
 ## Skärmdumpar
 
