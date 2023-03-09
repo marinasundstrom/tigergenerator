@@ -14,7 +14,7 @@ Det är en propagandasymbol som sedermera varit föremål för flertalet rättvi
 
 Den ekonomiska nyttjanderätten innehas av [Beredskapsmuseet](https://sv.wikipedia.org/wiki/Beredskapsmuseet) som har varit väldigt beskyddande av varumärket "En Svensk Tiger".
 
-När författaren och komikern Aron Flam sedan valde att använda en rejält omarbetad satirisk version av verket till omslaget för sin bok "Det här är en Svensk tiger" så stämdes han av Beredskapsmuseet som hävdade att det han gjort inte alls var satir.
+När författaren och komikern Aron Flam sedan valde att använda en rejält omarbetad satirisk version av verket till omslaget för sin bok "Det här är en Svensk tiger" så stämdes han av Beredskapsmuseet som hävdade att det han gjort inte alls var satir - de hävdade att han gett sig på en kulturell symbol.
 
 Förlagan til denna "Tigergenerator" uppkom under rättegångens tid. Den [ursprungliga webbappen](https://tiger.svt.se/) från vilken denna app hämtar sin inspiration skapades åt Sveriges Televisions satirprogram "Svenska nyheter" för att stödja satiren.
 
