@@ -12,7 +12,7 @@ Tack till SVT och de andra personerna bakom. Utan deras initiativ så hade denna
 
 Det är en propagandasymbol som sedermera varit föremål för flertalet rättvister.
 
-Den ekonomiska nyttjanderätten innehas av [Beredskapet](https://sv.wikipedia.org/wiki/Beredskapsmuseet) som har varit väldigt beskyddande av varumärket "En Svensk Tiger".
+Den ekonomiska nyttjanderätten innehas av [Beredskapsmuseet](https://sv.wikipedia.org/wiki/Beredskapsmuseet) som har varit väldigt beskyddande av varumärket "En Svensk Tiger".
 
 När författaren och komikern Aron Flam sedan valde att använda en rejält omarbetad satirisk version av verket till omslaget för sin bok "Det här är en Svensk tiger" så stämdes han av Beredskapsmuseet som hävdade att det han gjort inte alls var satir.
 
