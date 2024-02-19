@@ -2,7 +2,7 @@
 
 Syftet med denna app är att främja satir och ett bättre samtalsklimat där man kan ta upp allt.
 
-Denna app är i sig en utökning av humorprogrammet *Svenska nyheters* Tigergenerator. Den återanvänder bilder men lägger också till egna.
+Denna app är i sig en utökning av humorprogrammet *Svenska nyheters* [Tigergenerator](https://tiger.svt.se/). Den återanvänder bilder men lägger också till egna.
 
 Tack till SVT och de andra personerna bakom. Utan deras initiativ så hade denna webapp aldrig blivit till.
 
