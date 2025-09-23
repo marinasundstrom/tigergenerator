@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -13,21 +13,22 @@
     <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.0-rc.1.22427.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.0-rc.1.22427.2" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.8.3">
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly"
+      Version="9.0.0-*" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer"
+      Version="9.0.0-*" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.9.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
-    <PackageReference Include="AspNetCore.SassCompiler" Version="1.54.9" />
+    <PackageReference Include="AspNetCore.SassCompiler" Version="1.62.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="wwwroot\img\" />
   </ItemGroup>
   <ItemGroup>
-      <Content Include="Scripts/**/*"></Content>
+    <Content Include="Scripts/**/*"></Content>
   </ItemGroup>
 
   <ItemGroup>
