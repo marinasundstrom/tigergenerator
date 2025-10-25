@@ -1,6 +1,26 @@
+function toAbsoluteUrl(path: string) {
+    if (!path) {
+        return path;
+    }
+
+    if (path.startsWith("data:") || path.startsWith("blob:")) {
+        return path;
+    }
+
+    try {
+        const url = new URL(path, document.baseURI);
+        return url.toString();
+    }
+    catch (error) {
+        console.warn("Failed to resolve asset URL", path, error);
+        return path;
+    }
+}
+
 export function loadImage(path: string) {
     return new Promise((resolve, error) => {
         const image = new Image();
+        const absolutePath = toAbsoluteUrl(path);
         image.id = path;
         image.onload = () => {
             const image2 = document.getElementById(path);
@@ -9,7 +29,7 @@ export function loadImage(path: string) {
         image.onerror = (err) => {
             error(err);
         };
-        image.src = path;
+        image.src = absolutePath;
         image.hidden = true;
         document.body.append(image);
     });
@@ -77,7 +97,7 @@ function createImage(src: string): Promise<HTMLImageElement> {
         const image = new Image();
         image.onload = () => resolve(image);
         image.onerror = reject;
-        image.src = src;
+        image.src = toAbsoluteUrl(src);
     });
 }
 
@@ -137,7 +157,7 @@ function ensureCustomFaceCanvas(width: number, height: number): CanvasRenderingC
 
 function getMaskImage() {
     if (!maskImagePromise) {
-        maskImagePromise = createImage("/img/ansikten/ansikte-mask.png");
+        maskImagePromise = createImage("img/ansikten/ansikte-mask.png");
     }
 
     return maskImagePromise;

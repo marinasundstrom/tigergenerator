@@ -1,6 +1,24 @@
+function toAbsoluteUrl(path) {
+    if (!path) {
+        return path;
+    }
+    if (path.startsWith("data:") || path.startsWith("blob:")) {
+        return path;
+    }
+    try {
+        const url = new URL(path, document.baseURI);
+        return url.toString();
+    }
+    catch (error) {
+        console.warn("Failed to resolve asset URL", path, error);
+        return path;
+    }
+}
+
 export function loadImage(path) {
     return new Promise((resolve, error) => {
         const image = new Image();
+        const absolutePath = toAbsoluteUrl(path);
         image.id = path;
         image.onload = () => {
             const image2 = document.getElementById(path);
@@ -9,7 +27,7 @@ export function loadImage(path) {
         image.onerror = (err) => {
             error(err);
         };
-        image.src = path;
+        image.src = absolutePath;
         image.hidden = true;
         document.body.append(image);
     });
@@ -46,7 +64,7 @@ function createImage(src) {
         const image = new Image();
         image.onload = () => resolve(image);
         image.onerror = reject;
-        image.src = src;
+        image.src = toAbsoluteUrl(src);
     });
 }
 function whenImageReady(image) {
@@ -94,7 +112,7 @@ function ensureCustomFaceCanvas(width, height) {
 }
 function getMaskImage() {
     if (!maskImagePromise) {
-        maskImagePromise = createImage("/img/ansikten/ansikte-mask.png");
+        maskImagePromise = createImage("img/ansikten/ansikte-mask.png");
     }
     return maskImagePromise;
 }
