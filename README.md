@@ -20,6 +20,18 @@ Förlagan til denna "Tigergenerator" uppkom under rättegångens tid. Den [urspr
 
 I hovrätten fastslog att Aron Flams omarbetning var tillräckligt originell (hade "verkshöjd") och han friades.
 
+## Historik
+
+Denna app skrevs uprungligen 2020 för Blazor i .NET 5. Den har uppdaterats sedan dess.
+
+Men först 2025 har den publicerats.
+
+## Erkännande
+
+Den usprungliga appen var ett beställningsjobb åt SVT. I tidigare versioner nämndes i webbkonsolen att den byggts av [Emil Pålsson](https://github.com/emilpalsson) (Tretton37).
+
+Denna app återanvänder enbart bilder, men är helt skriven från grunden.
+
 ## Skärmdumpar
 
 ### Huvudvy
