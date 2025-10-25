@@ -25,19 +25,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\img\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Scripts/**/*"></Content>
+    <Content Update="tsconfig.json; sasscompiler.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+    <None Update="tsconfig.json; sasscompiler.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Pages\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pages\" />
-    <Folder Include="wwwroot\img\" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Canvas\Canvas.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
