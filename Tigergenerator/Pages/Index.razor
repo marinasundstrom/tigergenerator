@@ -99,6 +99,38 @@
                 </div>
 
                 <div class="row">
+                    <div class="form-group col-12 mt-4 custom-face-section">
+                        <label class="mb-2">Eget ansikte</label>
+                        <InputFile OnChange="HandleCustomFaceUpload" accept="image/*" class="form-control" />
+                        <small class="text-muted d-block mt-1">Ladda upp en bild och dra den för att passa masken.</small>
+
+                        @if (customFaceDataUrl is not null)
+                        {
+                            <div class="custom-face-editor mt-3">
+                                <div class="custom-face-stage">
+                                    <div class="custom-face-mask">
+                                        <img @ref="customFaceImageElement" src="@customFaceDataUrl" alt="Eget ansikte" draggable="false" />
+                                    </div>
+                                </div>
+
+                                <div class="custom-face-actions">
+                                    <button type="button" class="btn btn-outline-secondary" @onclick="ResetCustomFacePosition">
+                                        <i class="oi oi-target"></i> Centrera
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger" @onclick="ClearCustomFace">
+                                        <i class="oi oi-trash"></i> Ta bort
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted small mt-2">Ingen egen bild uppladdad ännu.</p>
+                        }
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="form-group col-md mt-4">
                         <label for="exampleFormControlSelect1" class="mb-2">Bindel</label>
                         <div class="input-group mb-3">

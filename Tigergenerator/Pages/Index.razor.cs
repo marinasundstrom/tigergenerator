@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -8,11 +9,12 @@ using System.Threading.Tasks;
 using Canvas;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 
 namespace Tigergenerator.Pages
 {
-    public partial class Index : ComponentBase
+    public partial class Index : ComponentBase, IAsyncDisposable
     {
         [Inject]
         public HttpClient Http { get; set; }
@@ -55,6 +57,16 @@ namespace Tigergenerator.Pages
 
         protected Canvas2D _canvasReference;
         readonly Random random = new Random();
+
+        private const long MaxCustomFaceUploadSize = 5 * 1024 * 1024;
+        private string? customFaceDataUrl = null;
+        private double customFaceOffsetX = double.NaN;
+        private double customFaceOffsetY = double.NaN;
+        private ElementReference customFaceImageElement;
+        private bool customFaceNeedsInit;
+        private bool customFaceDragInitialized;
+        private bool customFaceShouldAutoCenter;
+        private DotNetObjectReference<Index>? dotNetReference;
 
         protected override async Task OnInitializedAsync()
         {
@@ -122,7 +134,32 @@ namespace Tigergenerator.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            this._context = await this._canvasReference.GetContextAsync();
+            if (firstRender)
+            {
+                this._context = await this._canvasReference.GetContextAsync();
+            }
+
+            if (customFaceDataUrl is not null)
+            {
+                dotNetReference ??= DotNetObjectReference.Create(this);
+
+                var hasFiniteOffsets = IsFinite(customFaceOffsetX) && IsFinite(customFaceOffsetY);
+                var normalizedOffsetX = NormalizeOffset(customFaceOffsetX);
+                var normalizedOffsetY = NormalizeOffset(customFaceOffsetY);
+
+                if (customFaceNeedsInit)
+                {
+                    var shouldAutoCenter = customFaceShouldAutoCenter || !hasFiniteOffsets;
+                    await JSInterop.InitializeCustomFaceDrag(customFaceImageElement, dotNetReference, normalizedOffsetX, normalizedOffsetY, shouldAutoCenter);
+                    customFaceNeedsInit = false;
+                    customFaceDragInitialized = true;
+                    customFaceShouldAutoCenter = false;
+                }
+                else if (customFaceDragInitialized && hasFiniteOffsets)
+                {
+                    await JSInterop.UpdateCustomFaceTransform(customFaceImageElement, normalizedOffsetX, normalizedOffsetY);
+                }
+            }
         }
 
         public async Task Generate()
@@ -158,9 +195,15 @@ namespace Tigergenerator.Pages
             {
                 await this._context.DrawImageAsync(bilder["kroppar2." + kropp2], 0, 0, _canvasReference.Width, _canvasReference.Height);
             }
-            if (!string.IsNullOrEmpty(ansikte))
+            var hasCustomFace = customFaceDataUrl is not null && IsFinite(customFaceOffsetX) && IsFinite(customFaceOffsetY);
+
+            if (!hasCustomFace && !string.IsNullOrEmpty(ansikte))
             {
                 await this._context.DrawImageAsync(bilder["ansikten." + ansikte], 0, 0, _canvasReference.Width, _canvasReference.Height);
+            }
+            else if (hasCustomFace)
+            {
+                await JSInterop.DrawCustomFace(canvasId, customFaceDataUrl, NormalizeOffset(customFaceOffsetX), NormalizeOffset(customFaceOffsetY));
             }
             if (!string.IsNullOrEmpty(bindel))
             {
@@ -264,6 +307,108 @@ namespace Tigergenerator.Pages
         private async Task DownloadImage()
         {
             await JSInterop.DownloadCanvasAsImage(canvasId);
+        }
+
+        private async Task HandleCustomFaceUpload(InputFileChangeEventArgs e)
+        {
+            if (e.FileCount == 0)
+            {
+                return;
+            }
+
+            var file = e.File;
+            if (file is null)
+            {
+                return;
+            }
+
+            if (customFaceDragInitialized)
+            {
+                await JSInterop.DisposeCustomFaceDrag(customFaceImageElement);
+                customFaceDragInitialized = false;
+            }
+
+            await using var stream = file.OpenReadStream(MaxCustomFaceUploadSize);
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+
+            customFaceDataUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(memoryStream.ToArray())}";
+            customFaceOffsetX = double.NaN;
+            customFaceOffsetY = double.NaN;
+            customFaceNeedsInit = true;
+            customFaceShouldAutoCenter = true;
+
+            await InvokeAsync(StateHasChanged);
+            await GenerateInternal();
+        }
+
+        private async Task ResetCustomFacePosition()
+        {
+            if (customFaceDataUrl is null || !customFaceDragInitialized)
+            {
+                return;
+            }
+
+            await JSInterop.CenterCustomFace(customFaceImageElement);
+        }
+
+        private async Task ClearCustomFace()
+        {
+            if (customFaceDataUrl is null)
+            {
+                return;
+            }
+
+            if (customFaceDragInitialized)
+            {
+                await JSInterop.DisposeCustomFaceDrag(customFaceImageElement);
+                customFaceDragInitialized = false;
+            }
+
+            customFaceDataUrl = null;
+            customFaceOffsetX = double.NaN;
+            customFaceOffsetY = double.NaN;
+            customFaceNeedsInit = false;
+            customFaceShouldAutoCenter = false;
+
+            await InvokeAsync(StateHasChanged);
+            await GenerateInternal();
+        }
+
+        [JSInvokable]
+        public async Task UpdateCustomFacePosition(double offsetX, double offsetY)
+        {
+            if (!IsFinite(offsetX) || !IsFinite(offsetY))
+            {
+                return;
+            }
+
+            customFaceOffsetX = offsetX;
+            customFaceOffsetY = offsetY;
+
+            await InvokeAsync(GenerateInternal);
+        }
+
+        private static bool IsFinite(double value)
+        {
+            return !double.IsNaN(value) && !double.IsInfinity(value);
+        }
+
+        private static double NormalizeOffset(double value)
+        {
+            return IsFinite(value) ? value : 0d;
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (customFaceDragInitialized)
+            {
+                await JSInterop.DisposeCustomFaceDrag(customFaceImageElement);
+                customFaceDragInitialized = false;
+            }
+
+            dotNetReference?.Dispose();
+            dotNetReference = null;
         }
     }
 }
