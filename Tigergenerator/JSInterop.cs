@@ -44,6 +44,36 @@ namespace Tigergenerator
             await module.InvokeVoidAsync("downloadCanvasAsImage", elementId);
         }
 
+        public async ValueTask InitializeCustomFaceDrag<T>(ElementReference imageElement, DotNetObjectReference<T> dotNetReference, double offsetX, double offsetY, bool autoCenter) where T : class
+        {
+            var module = await moduleTask.Value;
+            await module.InvokeVoidAsync("initializeCustomFaceDrag", imageElement, dotNetReference, offsetX, offsetY, autoCenter);
+        }
+
+        public async ValueTask UpdateCustomFaceTransform(ElementReference imageElement, double offsetX, double offsetY)
+        {
+            var module = await moduleTask.Value;
+            await module.InvokeVoidAsync("updateCustomFaceTransform", imageElement, offsetX, offsetY);
+        }
+
+        public async ValueTask DisposeCustomFaceDrag(ElementReference imageElement)
+        {
+            var module = await moduleTask.Value;
+            await module.InvokeVoidAsync("disposeCustomFaceDrag", imageElement);
+        }
+
+        public async ValueTask CenterCustomFace(ElementReference imageElement)
+        {
+            var module = await moduleTask.Value;
+            await module.InvokeVoidAsync("centerCustomFace", imageElement);
+        }
+
+        public async ValueTask DrawCustomFace(string canvasId, string imageDataUrl, double offsetX, double offsetY)
+        {
+            var module = await moduleTask.Value;
+            await module.InvokeVoidAsync("drawCustomFace", canvasId, imageDataUrl, offsetX, offsetY);
+        }
+
         public async ValueTask DisposeAsync()
         {
             if (moduleTask.IsValueCreated)
