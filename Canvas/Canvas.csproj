@@ -22,6 +22,10 @@
     <Content Remove="wwwroot\css\" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="sasscompiler.json" />
+    <None Remove="tsconfig.json" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="wwwroot\css\" />
   </ItemGroup>
 </Project>
