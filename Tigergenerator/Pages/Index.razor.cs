@@ -143,16 +143,21 @@ namespace Tigergenerator.Pages
             {
                 dotNetReference ??= DotNetObjectReference.Create(this);
 
+                var hasFiniteOffsets = IsFinite(customFaceOffsetX) && IsFinite(customFaceOffsetY);
+                var normalizedOffsetX = NormalizeOffset(customFaceOffsetX);
+                var normalizedOffsetY = NormalizeOffset(customFaceOffsetY);
+
                 if (customFaceNeedsInit)
                 {
-                    await JSInterop.InitializeCustomFaceDrag(customFaceImageElement, dotNetReference, customFaceOffsetX, customFaceOffsetY, customFaceShouldAutoCenter);
+                    var shouldAutoCenter = customFaceShouldAutoCenter || !hasFiniteOffsets;
+                    await JSInterop.InitializeCustomFaceDrag(customFaceImageElement, dotNetReference, normalizedOffsetX, normalizedOffsetY, shouldAutoCenter);
                     customFaceNeedsInit = false;
                     customFaceDragInitialized = true;
                     customFaceShouldAutoCenter = false;
                 }
-                else if (customFaceDragInitialized)
+                else if (customFaceDragInitialized && hasFiniteOffsets)
                 {
-                    await JSInterop.UpdateCustomFaceTransform(customFaceImageElement, customFaceOffsetX, customFaceOffsetY);
+                    await JSInterop.UpdateCustomFaceTransform(customFaceImageElement, normalizedOffsetX, normalizedOffsetY);
                 }
             }
         }
@@ -190,7 +195,7 @@ namespace Tigergenerator.Pages
             {
                 await this._context.DrawImageAsync(bilder["kroppar2." + kropp2], 0, 0, _canvasReference.Width, _canvasReference.Height);
             }
-            var hasCustomFace = customFaceDataUrl is not null && !double.IsNaN(customFaceOffsetX) && !double.IsNaN(customFaceOffsetY);
+            var hasCustomFace = customFaceDataUrl is not null && IsFinite(customFaceOffsetX) && IsFinite(customFaceOffsetY);
 
             if (!hasCustomFace && !string.IsNullOrEmpty(ansikte))
             {
@@ -198,7 +203,7 @@ namespace Tigergenerator.Pages
             }
             else if (hasCustomFace)
             {
-                await JSInterop.DrawCustomFace(canvasId, customFaceDataUrl, customFaceOffsetX, customFaceOffsetY);
+                await JSInterop.DrawCustomFace(canvasId, customFaceDataUrl, NormalizeOffset(customFaceOffsetX), NormalizeOffset(customFaceOffsetY));
             }
             if (!string.IsNullOrEmpty(bindel))
             {
@@ -373,10 +378,25 @@ namespace Tigergenerator.Pages
         [JSInvokable]
         public async Task UpdateCustomFacePosition(double offsetX, double offsetY)
         {
+            if (!IsFinite(offsetX) || !IsFinite(offsetY))
+            {
+                return;
+            }
+
             customFaceOffsetX = offsetX;
             customFaceOffsetY = offsetY;
 
             await InvokeAsync(GenerateInternal);
+        }
+
+        private static bool IsFinite(double value)
+        {
+            return !double.IsNaN(value) && !double.IsInfinity(value);
+        }
+
+        private static double NormalizeOffset(double value)
+        {
+            return IsFinite(value) ? value : 0d;
         }
 
         public async ValueTask DisposeAsync()
