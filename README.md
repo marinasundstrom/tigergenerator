@@ -35,7 +35,8 @@ I hovrätten fastslog att Aron Flams omarbetning var tillräckligt originell (ha
 * Fritext
 * Textfärg
 * Bakgrundsfärg
-* Ladda upp egna assets *
+* Välja egna attribut
+* Ladda upp eget ansikte
 
 Alla som följs av * är förslag och finns ännu inte.
 
