@@ -24,7 +24,10 @@
 
     @if (!isLoaded)
     {
-        <p>Laddar...</p>
+        <div class="loading-indicator" role="status" aria-live="polite">
+            <div class="spinner-border text-primary" aria-hidden="true"></div>
+            <span class="loading-indicator__text text-muted">Laddar...</span>
+        </div>
     }
     else
     {
