@@ -62,11 +62,16 @@ namespace Tigergenerator.Pages
         private string? customFaceDataUrl = null;
         private double customFaceOffsetX = double.NaN;
         private double customFaceOffsetY = double.NaN;
+        private double customFaceScale = 1d;
         private ElementReference customFaceImageElement;
         private bool customFaceNeedsInit;
         private bool customFaceDragInitialized;
         private bool customFaceShouldAutoCenter;
         private DotNetObjectReference<Index>? dotNetReference;
+
+        private const double CustomFaceScaleStep = 0.1d;
+        private const double CustomFaceMinScale = 0.4d;
+        private const double CustomFaceMaxScale = 3d;
 
         private string loadingArtifact = "";
 
@@ -173,14 +178,14 @@ namespace Tigergenerator.Pages
                 if (customFaceNeedsInit)
                 {
                     var shouldAutoCenter = customFaceShouldAutoCenter || !hasFiniteOffsets;
-                    await JSInterop.InitializeCustomFaceDrag(customFaceImageElement, dotNetReference, normalizedOffsetX, normalizedOffsetY, shouldAutoCenter);
+                    await JSInterop.InitializeCustomFaceDrag(customFaceImageElement, dotNetReference, normalizedOffsetX, normalizedOffsetY, customFaceScale, shouldAutoCenter);
                     customFaceNeedsInit = false;
                     customFaceDragInitialized = true;
                     customFaceShouldAutoCenter = false;
                 }
                 else if (customFaceDragInitialized && hasFiniteOffsets)
                 {
-                    await JSInterop.UpdateCustomFaceTransform(customFaceImageElement, normalizedOffsetX, normalizedOffsetY);
+                    await JSInterop.UpdateCustomFaceTransform(customFaceImageElement, normalizedOffsetX, normalizedOffsetY, customFaceScale);
                 }
             }
         }
@@ -226,7 +231,7 @@ namespace Tigergenerator.Pages
             }
             else if (hasCustomFace)
             {
-                await JSInterop.DrawCustomFace(canvasId, customFaceDataUrl, NormalizeOffset(customFaceOffsetX), NormalizeOffset(customFaceOffsetY));
+                await JSInterop.DrawCustomFace(canvasId, customFaceDataUrl, NormalizeOffset(customFaceOffsetX), NormalizeOffset(customFaceOffsetY), customFaceScale);
             }
             if (!string.IsNullOrEmpty(bindel))
             {
@@ -358,6 +363,7 @@ namespace Tigergenerator.Pages
             customFaceDataUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(memoryStream.ToArray())}";
             customFaceOffsetX = double.NaN;
             customFaceOffsetY = double.NaN;
+            customFaceScale = 1d;
             customFaceNeedsInit = true;
             customFaceShouldAutoCenter = true;
 
@@ -373,6 +379,35 @@ namespace Tigergenerator.Pages
             }
 
             await JSInterop.CenterCustomFace(customFaceImageElement);
+        }
+
+        private async Task ZoomInCustomFace()
+        {
+            await AdjustCustomFaceScale(customFaceScale + CustomFaceScaleStep);
+        }
+
+        private async Task ZoomOutCustomFace()
+        {
+            await AdjustCustomFaceScale(customFaceScale - CustomFaceScaleStep);
+        }
+
+        private async Task AdjustCustomFaceScale(double requestedScale)
+        {
+            if (customFaceDataUrl is null || !customFaceDragInitialized)
+            {
+                return;
+            }
+
+            var clampedScale = Math.Clamp(requestedScale, CustomFaceMinScale, CustomFaceMaxScale);
+
+            if (Math.Abs(clampedScale - customFaceScale) < 0.0001d)
+            {
+                return;
+            }
+
+            customFaceScale = clampedScale;
+
+            await JSInterop.SetCustomFaceScale(customFaceImageElement, customFaceScale);
         }
 
         private async Task ClearCustomFace()
@@ -391,6 +426,7 @@ namespace Tigergenerator.Pages
             customFaceDataUrl = null;
             customFaceOffsetX = double.NaN;
             customFaceOffsetY = double.NaN;
+            customFaceScale = 1d;
             customFaceNeedsInit = false;
             customFaceShouldAutoCenter = false;
 

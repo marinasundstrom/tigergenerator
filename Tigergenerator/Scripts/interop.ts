@@ -46,6 +46,7 @@ type FaceDragState = {
     dotNetRef: DotNetReference | null;
     offsetX: number;
     offsetY: number;
+    zoom: number;
     scaleX: number;
     scaleY: number;
     startX: number;
@@ -104,8 +105,8 @@ function applyTransform(state: FaceDragState) {
 
     updateScale(state);
 
-    state.image.style.width = `${state.image.naturalWidth * state.scaleX}px`;
-    state.image.style.height = `${state.image.naturalHeight * state.scaleY}px`;
+    state.image.style.width = `${state.image.naturalWidth * state.scaleX * state.zoom}px`;
+    state.image.style.height = `${state.image.naturalHeight * state.scaleY * state.zoom}px`;
     state.image.style.transform = `translate(${state.offsetX * state.scaleX}px, ${state.offsetY * state.scaleY}px)`;
 }
 
@@ -118,8 +119,8 @@ function centerState(state: FaceDragState) {
         return;
     }
 
-    state.offsetX = MASK_CENTER_X - state.image.naturalWidth / 2;
-    state.offsetY = MASK_CENTER_Y - state.image.naturalHeight / 2;
+    state.offsetX = MASK_CENTER_X - (state.image.naturalWidth * state.zoom) / 2;
+    state.offsetY = MASK_CENTER_Y - (state.image.naturalHeight * state.zoom) / 2;
     applyTransform(state);
     notify(state);
 }
@@ -218,6 +219,7 @@ function ensureState(imageElement: HTMLImageElement, dotNetRef: DotNetReference,
             dotNetRef,
             offsetX: 0,
             offsetY: 0,
+            zoom: 1,
             scaleX: 1,
             scaleY: 1,
             startX: 0,
@@ -240,7 +242,7 @@ function ensureState(imageElement: HTMLImageElement, dotNetRef: DotNetReference,
     return state;
 }
 
-export function initializeCustomFaceDrag(imageElement: HTMLImageElement | null, dotNetRef: DotNetReference, offsetX: number, offsetY: number, autoCenter: boolean) {
+export function initializeCustomFaceDrag(imageElement: HTMLImageElement | null, dotNetRef: DotNetReference, offsetX: number, offsetY: number, scale: number, autoCenter: boolean) {
     if (!imageElement) {
         return;
     }
@@ -251,6 +253,7 @@ export function initializeCustomFaceDrag(imageElement: HTMLImageElement | null, 
     }
 
     const state = ensureState(imageElement, dotNetRef, stage);
+    state.zoom = Number.isFinite(scale) && scale > 0 ? scale : 1;
 
     const shouldAutoCenter = autoCenter || !Number.isFinite(offsetX) || !Number.isFinite(offsetY);
 
@@ -261,11 +264,12 @@ export function initializeCustomFaceDrag(imageElement: HTMLImageElement | null, 
             state.offsetX = offsetX;
             state.offsetY = offsetY;
             applyTransform(state);
+            notify(state);
         }
     });
 }
 
-export function updateCustomFaceTransform(imageElement: HTMLImageElement | null, offsetX: number, offsetY: number) {
+export function updateCustomFaceTransform(imageElement: HTMLImageElement | null, offsetX: number, offsetY: number, scale: number) {
     if (!imageElement) {
         return;
     }
@@ -277,7 +281,31 @@ export function updateCustomFaceTransform(imageElement: HTMLImageElement | null,
 
     state.offsetX = offsetX;
     state.offsetY = offsetY;
+    if (Number.isFinite(scale) && scale > 0) {
+        state.zoom = scale;
+    }
     applyTransform(state);
+}
+
+export function setCustomFaceScale(imageElement: HTMLImageElement | null, scale: number) {
+    if (!imageElement || !Number.isFinite(scale) || scale <= 0) {
+        return;
+    }
+
+    const state = dragStates.get(imageElement);
+    if (!state) {
+        return;
+    }
+
+    whenImageReady(imageElement).then(() => {
+        const currentCenterX = state.offsetX + (imageElement.naturalWidth * state.zoom) / 2;
+        const currentCenterY = state.offsetY + (imageElement.naturalHeight * state.zoom) / 2;
+        state.zoom = scale;
+        state.offsetX = currentCenterX - (imageElement.naturalWidth * state.zoom) / 2;
+        state.offsetY = currentCenterY - (imageElement.naturalHeight * state.zoom) / 2;
+        applyTransform(state);
+        notify(state);
+    });
 }
 
 export function disposeCustomFaceDrag(imageElement: HTMLImageElement | null) {
@@ -313,8 +341,8 @@ export function centerCustomFace(imageElement: HTMLImageElement | null) {
     whenImageReady(imageElement).then(() => centerState(state));
 }
 
-export async function drawCustomFace(canvasId: string, imageDataUrl: string, offsetX: number, offsetY: number) {
-    if (!imageDataUrl || !Number.isFinite(offsetX) || !Number.isFinite(offsetY)) {
+export async function drawCustomFace(canvasId: string, imageDataUrl: string, offsetX: number, offsetY: number, scale: number) {
+    if (!imageDataUrl || !Number.isFinite(offsetX) || !Number.isFinite(offsetY) || !Number.isFinite(scale) || scale <= 0) {
         return;
     }
 
@@ -339,7 +367,9 @@ export async function drawCustomFace(canvasId: string, imageDataUrl: string, off
     }
 
     offscreenContext.clearRect(0, 0, customFaceCanvas.width, customFaceCanvas.height);
-    offscreenContext.drawImage(faceImage, offsetX, offsetY);
+    const scaledWidth = faceImage.width * scale;
+    const scaledHeight = faceImage.height * scale;
+    offscreenContext.drawImage(faceImage, offsetX, offsetY, scaledWidth, scaledHeight);
     offscreenContext.globalCompositeOperation = "destination-in";
     offscreenContext.drawImage(maskImage, 0, 0);
     offscreenContext.globalCompositeOperation = "source-over";
