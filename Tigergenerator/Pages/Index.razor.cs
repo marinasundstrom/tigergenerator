@@ -70,12 +70,12 @@ namespace Tigergenerator.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            texter = await Http.GetFromJsonAsync<string[]>("/texts.json");
-            kroppar = await Http.GetFromJsonAsync<Dictionary<string, string>>("/kroppar.json");
-            ansikten = await Http.GetFromJsonAsync<Dictionary<string, string>>("/ansikten.json");
-            hattar = await Http.GetFromJsonAsync<Dictionary<string, string>>("/hattar.json");
-            bindlar = await Http.GetFromJsonAsync<Dictionary<string, string>>("/bindlar.json");
-            accessoarer = await Http.GetFromJsonAsync<Dictionary<string, string>>("/accessoarer.json");
+            texter = await Http.GetFromJsonAsync<string[]>("texts.json");
+            kroppar = await Http.GetFromJsonAsync<Dictionary<string, string>>("kroppar.json");
+            ansikten = await Http.GetFromJsonAsync<Dictionary<string, string>>("ansikten.json");
+            hattar = await Http.GetFromJsonAsync<Dictionary<string, string>>("hattar.json");
+            bindlar = await Http.GetFromJsonAsync<Dictionary<string, string>>("bindlar.json");
+            accessoarer = await Http.GetFromJsonAsync<Dictionary<string, string>>("accessoarer.json");
 
             farger = new Dictionary<string, string>() {
                 { "Vit", "white" },
