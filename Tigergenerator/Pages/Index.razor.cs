@@ -118,7 +118,7 @@ namespace Tigergenerator.Pages
 
         public ValueTask<IJSObjectReference> LoadImage(string dir, string value)
         {
-            return JSInterop.LoadImage($"/img/{dir}/{value.ToUpper()}.png");
+            return JSInterop.LoadImage($"/img/{dir}/{value.ToLower()}.png");
         }
 
         private async Task ScrollDown()
