@@ -6,14 +6,27 @@
         <h1>Tigergenerator 2.0</h1>
         <p class="lead text-muted">Med rätt att få göra satir.</p>
 
-        <Canvas2D id="@canvasId" Width="1000" Height="625" @ref="_canvasReference" />
+
+        @if (!isLoaded)
+        {
+            <div class="loading-indicator" role="status" aria-live="polite">
+                <div class="spinner-border text-primary" aria-hidden="true"></div>
+                <span class="loading-indicator__text text-muted">Laddar @loadingArtifact...</span>
+            </div>
+        }
+
+        <Canvas2D id="@canvasId" Width="1000" Height="625" @ref="_canvasReference"
+            class="@(!isLoaded ? "display: none" : "display: block")" />
 
         @if (isLoaded)
         {
             <p class="mt-5">
-                <a href="#" class="btn btn-lg btn-primary my-2" @onclick="GetRandomTiger"><i class="oi oi-random"></i> Slumpa fram</a>
-                <a href="#" class="btn btn-lg btn-secondary my-2" @onclick="ScrollDown" @onclick:preventDefault><i class="oi oi-arrow-bottom"></i> Anpassa</a>
-                <a href="#" class="btn btn-lg btn-success my-2" @onclick="DownloadImage"><i class="oi oi-data-transfer-download"></i> Ladda ner</a>
+                <a href="#" class="btn btn-lg btn-primary my-2" @onclick="GetRandomTiger"><i class="oi oi-random"></i>
+                    Slumpa fram</a>
+                <a href="#" class="btn btn-lg btn-secondary my-2" @onclick="ScrollDown" @onclick:preventDefault><i
+                        class="oi oi-arrow-bottom"></i> Anpassa</a>
+                <a href="#" class="btn btn-lg btn-success my-2" @onclick="DownloadImage"><i
+                        class="oi oi-data-transfer-download"></i> Ladda ner</a>
                 @*<a href="#" class="btn btn-lg btn-secondary my-2 ml-md-4" @onclick="Share" @onclick:preventDefault><i class="oi oi-share"></i> Dela</a>*@
             </p>
         }
@@ -24,10 +37,7 @@
 
     @if (!isLoaded)
     {
-        <div class="loading-indicator" role="status" aria-live="polite">
-            <div class="spinner-border text-primary" aria-hidden="true"></div>
-            <span class="loading-indicator__text text-muted">Laddar...</span>
-        </div>
+        <p>Laddar...</p>
     }
     else
     {
@@ -112,7 +122,8 @@
                             <div class="custom-face-editor mt-3">
                                 <div class="custom-face-stage">
                                     <div class="custom-face-mask">
-                                        <img @ref="customFaceImageElement" src="@customFaceDataUrl" alt="Eget ansikte" draggable="false" />
+                                        <img @ref="customFaceImageElement" src="@customFaceDataUrl" alt="Eget ansikte"
+                                            draggable="false" />
                                     </div>
                                 </div>
 
@@ -168,7 +179,8 @@
                     <div class="form-group mt-4 mb-3">
                         <label for="exampleFormControlInput1" class="mb-2">Text</label>
                         <div class="input-group mb-2">
-                            <InputText list="text" type="text" class="form-control textinput" id="exampleFormControlInput1" placeholder="En svensk tiger" @bind-Value="text" />
+                            <InputText list="text" type="text" class="form-control textinput" id="exampleFormControlInput1"
+                                placeholder="En svensk tiger" @bind-Value="text" />
                             <button type="button" class="btn btn-outline-secondary" @onclick="RandomText">
                                 <i class="oi oi-random"></i>
                             </button>
