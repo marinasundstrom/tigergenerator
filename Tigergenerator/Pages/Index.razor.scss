@@ -31,7 +31,7 @@
         border-radius: 0.75rem;
         overflow: hidden;
         background-color: #f8f9fa;
-        background-image: url('/img/ansikten/ansikte-mask.png');
+        background-image: url('img/ansikten/ansikte-mask.png');
         background-size: cover;
         background-position: center;
         border: 1px solid rgba(0, 0, 0, 0.1);
@@ -40,10 +40,10 @@
     .custom-face-mask {
         position: absolute;
         inset: 0;
-        mask-image: url('/img/ansikten/ansikte-mask.png');
+        mask-image: url('img/ansikten/ansikte-mask.png');
         mask-size: cover;
         mask-repeat: no-repeat;
-        -webkit-mask-image: url('/img/ansikten/ansikte-mask.png');
+        -webkit-mask-image: url('img/ansikten/ansikte-mask.png');
         -webkit-mask-size: cover;
         -webkit-mask-repeat: no-repeat;
         touch-action: none;

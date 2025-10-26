@@ -94,7 +94,7 @@ function ensureCustomFaceCanvas(width, height) {
 }
 function getMaskImage() {
     if (!maskImagePromise) {
-        maskImagePromise = createImage("/img/ansikten/ansikte-mask.png");
+        maskImagePromise = createImage("img/ansikten/ansikte-mask.png");
     }
     return maskImagePromise;
 }
