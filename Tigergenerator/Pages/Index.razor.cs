@@ -68,6 +68,8 @@ namespace Tigergenerator.Pages
         private bool customFaceShouldAutoCenter;
         private DotNetObjectReference<Index>? dotNetReference;
 
+        private string loadingArtifact = "";
+
         protected override async Task OnInitializedAsync()
         {
             texter = await Http.GetFromJsonAsync<string[]>("texts.json");
@@ -91,16 +93,37 @@ namespace Tigergenerator.Pages
 
             bilder = new Dictionary<string, IJSObjectReference>();
 
+            UpdateLoadingIndicator("kroppar");
+
             await LoadImages("kroppar1", kroppar);
             await LoadImages("kroppar2", kroppar);
+
+            UpdateLoadingIndicator("ansikten");
+
             await LoadImages("ansikten", ansikten);
+
+            UpdateLoadingIndicator("hattar");
+
             await LoadImages("hattar", hattar);
+
+            UpdateLoadingIndicator("bindlar");
+
             await LoadImages("bindlar", bindlar);
+
+            UpdateLoadingIndicator("accessoarer");
+
             await LoadImages("accessoarer", accessoarer);
 
             isLoaded = true;
 
             await GetRandomTiger();
+        }
+
+        private void UpdateLoadingIndicator(string artifact)
+        {
+            loadingArtifact = artifact;
+
+            StateHasChanged();
         }
 
         public async ValueTask LoadImages(string dir, IDictionary<string, string> keyValues)
