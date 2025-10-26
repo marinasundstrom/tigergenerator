@@ -44,16 +44,22 @@ namespace Tigergenerator
             await module.InvokeVoidAsync("downloadCanvasAsImage", elementId);
         }
 
-        public async ValueTask InitializeCustomFaceDrag<T>(ElementReference imageElement, DotNetObjectReference<T> dotNetReference, double offsetX, double offsetY, bool autoCenter) where T : class
+        public async ValueTask InitializeCustomFaceDrag<T>(ElementReference imageElement, DotNetObjectReference<T> dotNetReference, double offsetX, double offsetY, double scale, bool autoCenter) where T : class
         {
             var module = await moduleTask.Value;
-            await module.InvokeVoidAsync("initializeCustomFaceDrag", imageElement, dotNetReference, offsetX, offsetY, autoCenter);
+            await module.InvokeVoidAsync("initializeCustomFaceDrag", imageElement, dotNetReference, offsetX, offsetY, scale, autoCenter);
         }
 
-        public async ValueTask UpdateCustomFaceTransform(ElementReference imageElement, double offsetX, double offsetY)
+        public async ValueTask UpdateCustomFaceTransform(ElementReference imageElement, double offsetX, double offsetY, double scale)
         {
             var module = await moduleTask.Value;
-            await module.InvokeVoidAsync("updateCustomFaceTransform", imageElement, offsetX, offsetY);
+            await module.InvokeVoidAsync("updateCustomFaceTransform", imageElement, offsetX, offsetY, scale);
+        }
+
+        public async ValueTask SetCustomFaceScale(ElementReference imageElement, double scale)
+        {
+            var module = await moduleTask.Value;
+            await module.InvokeVoidAsync("setCustomFaceScale", imageElement, scale);
         }
 
         public async ValueTask DisposeCustomFaceDrag(ElementReference imageElement)
@@ -68,10 +74,10 @@ namespace Tigergenerator
             await module.InvokeVoidAsync("centerCustomFace", imageElement);
         }
 
-        public async ValueTask DrawCustomFace(string canvasId, string imageDataUrl, double offsetX, double offsetY)
+        public async ValueTask DrawCustomFace(string canvasId, string imageDataUrl, double offsetX, double offsetY, double scale)
         {
             var module = await moduleTask.Value;
-            await module.InvokeVoidAsync("drawCustomFace", canvasId, imageDataUrl, offsetX, offsetY);
+            await module.InvokeVoidAsync("drawCustomFace", canvasId, imageDataUrl, offsetX, offsetY, scale);
         }
 
         public async ValueTask DisposeAsync()
